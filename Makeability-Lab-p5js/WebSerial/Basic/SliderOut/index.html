@@ -1,0 +1,149 @@
+<!-- 
+
+This code outputs a slider value over Web Serial and also receives serial input and prints to console. 
+The code is based on https://web.dev/serial/
+
+Currently, this code only works in Chrome because of its reliance on WebUSB (not yet
+supported in FireFox, Safari, etc.). If you are using a Chrome version earlier than v87, you 
+may need to enable an experimental flag.
+
+To check your Chrome version, in the Chrome address bar, type:
+chrome://version
+
+To enable WebUSB on older Chrome versions:
+1. First, type chrome://flags in the address bar
+2. Then, in the search box, type "experimental-web-platform-features"
+3. This flag should be set to "Enabled"
+4. Restart your browser
+
+To test that this worked
+1. Open Chrome to any webpage
+2. Open the dev console (cmd-option-i on Mac or ctrl-shift-i on Windows) and type: > navigator.serial
+3. If you see something like "Serial {onconnect:null, ondisconnect: null}" then it worked!
+   If, instead, it says "undefined" then it didn't work. Try restarting your computer and then Chrome.
+
+Some related examples:
+- https://codelabs.developers.google.com/codelabs/web-serial#0
+
+By Jon E. Froehlich
+@jonfroehlich
+http://makeabilitylab.io/ 
+
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Simple Web Serial I/O Demo</title>
+  <meta name="author" content="Jon E. Froehlich">
+</head>
+
+<body>
+  <script src="../../../_libraries/serial.js"></script>
+  <h1>Web Serial Demo</h1>
+  This demo uses a slider to send a number between 0-255 to your connected serial device (<i>e.g.,</i> a CPX or
+  Arduino).
+
+  <p>To begin, read the instructions below and then click this "Connect" button.</p>
+
+  <p></p>
+  <button id="connect-button" onclick="onConnectButtonClick()">Connect via Serial Port</button>
+  <div id="interactive-controls" style="display:none">
+    <h1>Slider value: <span id="slider-value">0</span></h1>
+    <input id="slider" type="range" min="0" max="255" value="128" onchange="onSliderValueChanged(this, event)" />
+  </div>
+  <div id="html-message"></div>
+
+  <script>
+    const htmlMsg = document.getElementById('html-message');
+
+    // Setup Web Serial using serial.js
+    const serial = new Serial();
+    serial.on(SerialEvents.CONNECTION_OPENED, onSerialConnectionOpened);
+    serial.on(SerialEvents.CONNECTION_CLOSED, onSerialConnectionClosed);
+    serial.on(SerialEvents.DATA_RECEIVED, onSerialDataReceived);
+    serial.on(SerialEvents.ERROR_OCCURRED, onSerialErrorOccurred);
+
+    // Initialize the text that prints out the slider value
+    let sliderVal = document.getElementById('slider').value;
+    document.getElementById('slider-value').textContent = sliderVal;
+
+    /**
+     * Automatically called when the slider value changes. Hooked up in HTML above.
+     */
+    async function onSliderValueChanged(src, event) {
+      console.log("Writing to serial: ", src.value.toString());
+      serial.writeLine(src.value);
+
+      // Update the slider value text
+      document.getElementById('slider-value').textContent = src.value;
+    }
+
+    /**
+     * Automatically called when the connect button has been clicked. Hooked up in HTML above.
+     */
+    async function onConnectButtonClick() {
+      if (navigator.serial) {
+        if (!serial.isOpen()) {
+          await serial.connectAndOpen();
+        } else {
+          console.log("The serial connection appears already open");
+        }
+
+      } else {
+        alert('The Web Serial API does not appear supported on this web browser. Are you using Chrome? Did you remember to enable `experimental-web-platform-features` in Chrome? See https://web.dev/serial/');
+      }
+    }
+
+    /**
+     * Callback function by serial.js when there is an error on web serial
+     * 
+     * @param {} eventSender 
+     */
+    function onSerialErrorOccurred(eventSender, error) {
+      console.log("onSerialErrorOccurred", error);
+      htmlMsg.textContent = "onSerialErrorOccurred: " + error;
+    }
+
+    /**
+     * Callback function by serial.js when web serial connection is opened
+     * 
+     * @param {} eventSender 
+     */
+    function onSerialConnectionOpened(eventSender) {
+      console.log("onSerialConnectionOpened");
+      document.getElementById("connect-button").style.display = "none";
+      document.getElementById("instructions").style.display = "none";
+
+      document.getElementById("interactive-controls").style.visibility = "visible";
+      document.getElementById("interactive-controls").style.display = "block";
+      htmlMsg.textContent = "Serial connection opened!";
+    }
+
+    /**
+     * Callback function by serial.js when web serial connection is closed
+     * 
+     * @param {} eventSender 
+     */
+    function onSerialConnectionClosed(eventSender) {
+      console.log("onSerialConnectionClosed");
+      document.getElementById("connect-button").style.display = "block";
+      document.getElementById("interactive-controls").style.display = "none";
+    }
+
+    /**
+     * Callback function serial.js when new web serial data is received
+     * 
+     * @param {*} eventSender 
+     * @param {String} newData new data received over serial
+     */
+    function onSerialDataReceived(eventSender, newData) {
+      console.log("onSerialDataReceived", newData);
+      htmlMsg.textContent = newData;
+    }
+  </script>
+</body>
+
+</html>

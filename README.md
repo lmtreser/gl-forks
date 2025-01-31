@@ -1,2 +1,3 @@
-# gl-forks
-Forks de proyectos varios: Electrónica, Arduino, Computación Física...
+# Forks
+
+Forks de proyectos interesantes.

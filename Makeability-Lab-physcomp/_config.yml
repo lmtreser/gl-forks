@@ -1,0 +1,66 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+remote_theme: pmarsceill/just-the-docs
+
+# Fixed at 0.2.8 because of: https://github.com/makeabilitylab/physcomp/issues/9
+# remote_theme: pmarsceill/just-the-docs@v0.2.8
+
+# For "Just the Docs" configuration options, see:
+# - https://pmarsceill.github.io/just-the-docs/docs/configuration/
+
+title: Physical Computing
+description: A learning resource for prototyping interactive digital-physical systems
+
+# Turn on incremental building to reduce overall build time (still in beta)
+# See: https://jekyllrb.com/docs/configuration/incremental-regeneration/
+incremental: true
+
+# site.url: https://jonfroehlich.github.io/physcomp
+# Make absolute paths work with GitHub pages
+# See: https://stackoverflow.com/a/19173888/388117
+baseurl: /physcomp
+
+# custom site variables
+arduino_github_baseurl: "https://github.com/jonfroehlich/arduino"
+comments: false
+
+# Set a path/url to a logo that will be displayed instead of the title
+# logo: "/assets/images/logo.png"
+
+# Enable or disable the site search
+# Supports true (default) or false
+search_enabled: true
+
+# Added this excerpt_separator due to the following:
+# https://blog.slaks.net/2013-08-09/jekyll-tag-was-never-closed/
+# excerpt_separator: ""
+
+# Enable support for hyphenated search words:
+# search_tokenizer_separator: /[\s/]+/
+
+# Aux links for the upper right navigation
+aux_links:
+  "Makeability Lab":
+    - "//makeabilitylab.cs.washington.edu"
+
+# Heading anchor links appear on hover over h1-h6 tags in page content
+# allowing users to deep link to a particular heading on a page.
+#
+# Supports true (default) or false/nil
+heading_anchors: true
+
+# Footer content appears at the bottom of every page's main content
+footer_content: "All content is <a href=\"https://github.com/makeabilitylab/physcomp\">open source</a> and produced by the <a href=\"https://makeabilitylab.cs.washington.edu\">Makeability Lab</a> and Professor <a href=\"https://github.com/jonfroehlich\">Jon E. Froehlich</a>. Found an error? File a <a href=\"https://github.com/makeabilitylab/physcomp/issues\">GitHub Issue</a>."
+
+# Google Analytics Tracking (optional)
+# e.g, UA-1234567-89
+ga_tracking: UA-161192681-1
+
+

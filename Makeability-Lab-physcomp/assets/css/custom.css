@@ -1,0 +1,115 @@
+/* This is custom.css */
+video {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+blockquote{
+  margin: 2em 1em 2em 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-style: italic;
+  font-size: 22px;
+  border-left: 0.25em solid #6f777d;
+}
+
+/* I had to add this in otherwise we were getting weird line breaks on links. The just-the-docs css sets
+this to white-space: no-wrap. Not sure why. See: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space */
+.main-content a{
+  white-space: normal;
+}
+
+.margin-zero{
+  margin: 0;
+}
+
+.text-right{
+  text-align: right;
+}
+
+cite{
+  text-align: right;
+  font-size: smaller;
+}
+
+/* to add a margin at the bottom of our code blocks */
+figure.highlight {
+  margin-bottom: 1em;
+} 
+
+/* Without this, the gist it script's prettify font is too large */
+.gist-it-gist{
+  font-size: small;
+}
+
+.width-100{
+  width: 100%;
+}
+
+.img-50{
+  width: 50px;
+}
+
+/** FOR SMALL TABLES **/
+.condensed-table{
+  min-width: 0px;
+}
+
+.condensed-table th, td{
+  min-width: 0px;
+  font-size: 12px !important;
+}
+
+/** VIBRATION TABLE **/
+.vibro-table{
+  min-width: 0px;
+  padding: 0.25rem;
+}
+
+.vibro-table th, td{
+  padding: 0.25rem;
+  min-width: 0px;
+  font-size: 12px !important;
+}
+
+.vibro-table img{
+  width: 60px !important;
+  min-width: 60px;
+}
+
+/* image align center */
+/* See: https://mmistakes.github.io/minimal-mistakes/docs/utility-classes/
+/* https://github.com/mmistakes/minimal-mistakes/blob/a2385e25840f38d573d057f427396eaf09f41e81/_sass/minimal-mistakes/_utilities.scss */
+.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.test-css{
+  font-size: 14 pt;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/**** FOR TOCBOT ******/
+/** See: https://tscanlin.github.io/tocbot/ **/
+#tocbot-toc{
+  position: fixed !important;
+  visibility: hidden;
+  top: 90px;
+  left: calc((100% - 1064px) / 2 + 264px + 800px); 
+  width:250px;
+  right: 0px;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+#tocbot-toc ol {
+  list-style: none;
+}
+
+
+
+
